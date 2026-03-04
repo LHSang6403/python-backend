@@ -10,12 +10,15 @@ from loguru import logger
 
 from app.api.v1 import router as api_v1_router
 from app.clients.postgres import connect_db, disconnect_db
-from app.clients.rabbitmq import connect_rabbitmq, disconnect_rabbitmq
+from app.clients.rabbitmq import connect_rabbitmq, disconnect_rabbitmq, get_consumer
 from app.clients.redis import connect_redis, disconnect_redis
 from app.clients.rest import connect_http_client, disconnect_http_client
 from app.core.config import get_settings
 from app.core.logging import setup_logging
 from app.graphql.schema import graphql_router
+from app.middleware.rate_limit import RateLimitMiddleware
+from app.services.notification import handle_product_event
+from app.services.order_notification import handle_order_event
 
 settings = get_settings()
 
@@ -29,6 +32,11 @@ async def lifespan(app: FastAPI):
     await connect_redis()
     await connect_rabbitmq()
     await connect_http_client()
+
+    # Start event consumers
+    consumer = await get_consumer()
+    await consumer.consume("product.events", handle_product_event)
+    await consumer.consume("order.events", handle_order_event)
 
     logger.info("All clients connected ✓")
     yield
@@ -55,6 +63,9 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
         openapi_url="/openapi.json",
     )
+
+    # ── Rate limiting ──────────────────────────────────────────
+    app.add_middleware(RateLimitMiddleware)
 
     # ── CORS ──────────────────────────────────────────────────
     app.add_middleware(

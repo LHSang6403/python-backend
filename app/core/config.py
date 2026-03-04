@@ -68,6 +68,25 @@ class Settings(BaseSettings):
             f"@{self.rabbitmq_host}:{self.rabbitmq_port}{self.rabbitmq_vhost}"
         )
 
+    # ── JWT ────────────────────────────────────────────────────
+    jwt_secret_key: str = "change-me-in-production"
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+    refresh_token_expire_days: int = 7
+
+    # ── PASETO ──────────────────────────────────────────────────
+    paseto_secret_key: str = "change-me-32-bytes-exactly!12345"
+    paseto_access_token_expire_minutes: int = 30
+    paseto_refresh_token_expire_days: int = 7
+
+    # ── Stock cache ──────────────────────────────────────────
+    stock_cache_ttl: int = 300
+
+    # ── Rate limiting ────────────────────────────────────────
+    rate_limit_auth_per_minute: int = 10
+    rate_limit_write_per_minute: int = 30
+    rate_limit_read_per_minute: int = 60
+
     # ── External REST API ─────────────────────────────────────
     external_api_base_url: str = "https://api.example.com"
     external_api_key: str = ""

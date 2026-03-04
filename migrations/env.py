@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 # Import Base + all models so Alembic can autogenerate migrations
 from app.clients.postgres import Base  # noqa: F401
-# import app.models  ← uncomment once you add models
+import app.models  # noqa: F401
 
 from app.core.config import get_settings
 

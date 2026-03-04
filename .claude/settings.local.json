@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(alembic revision:*)",
+      "Bash(pip install:*)",
+      "Bash(alembic upgrade:*)",
+      "Bash(python:*)",
+      "Bash(python3.10:*)",
+      "Bash(/Library/Frameworks/Python.framework/Versions/3.10/bin/python3:*)",
+      "Bash(source:*)",
+      "Bash(/Users/lehoangsang/python-backend/.venv/bin/pip install:*)",
+      "Bash(.venv/bin/python:*)",
+      "Bash(.venv/bin/pip uninstall:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(__NEW_LINE_83df91808ab93a5c__ echo:*)",
+      "WebSearch",
+      "WebFetch(domain:pyseto.readthedocs.io)",
+      "WebFetch(domain:github.com)",
+      "Bash(pip show:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 show:*)",
+      "Bash(pip3 install:*)",
+      "Bash(/Users/lehoangsang/python-backend/.venv/bin/python:*)",
+      "Bash(lsof:*)",
+      "Bash(echo === Login ===:*)"
+    ]
+  }
+}

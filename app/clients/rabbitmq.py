@@ -69,7 +69,7 @@ class RabbitMQPublisher:
         headers: dict[str, Any] | None = None,
     ) -> None:
         exchange = await self._ch.get_exchange(exchange_name) if exchange_name \
-            else await self._ch.get_exchange("")
+            else self._ch.default_exchange
 
         message = Message(
             body=json.dumps(body, default=str).encode(),
